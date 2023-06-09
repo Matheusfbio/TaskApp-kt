@@ -3,10 +3,10 @@ package br.com.example.taskapp.ui
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.example.taskapp.R
 import br.com.example.taskapp.databinding.FragmentSplashBinding
@@ -27,7 +27,7 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Handler(Looper.getMainLooper()).postDelayed(this::checkAuth, 2500)
+        Handler(Looper.getMainLooper()).postDelayed(this::checkAuth, 3000)
     }
 
     private fun checkAuth() {

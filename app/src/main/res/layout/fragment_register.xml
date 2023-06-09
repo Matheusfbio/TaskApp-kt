@@ -60,7 +60,9 @@
                     android:background="@drawable/bg_edit"
                     android:hint="@string/ph_email"
                     android:padding="14dp"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:autofillHints=""
+                    android:inputType="textAutoComplete" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -74,10 +76,11 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:background="@drawable/bg_edit"
-                    android:hint="@string/ph_email"
+                    android:hint="@string/v_senha"
                     android:padding="14dp"
                     android:textSize="14sp"
-                    android:autofillHints="" />
+                    android:autofillHints=""
+                    android:inputType="textPassword" />
 
                 <Button
                     android:layout_width="match_parent"
@@ -88,6 +91,15 @@
                     android:textAllCaps="false"
                     android:textColor="@color/color_default"
                     app:backgroundTint="@null" />
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    tools:visibility="visible"
+                    android:indeterminateTint="@color/white"
+                    android:layout_marginTop="8dp"
+                    android:layout_gravity="center_horizontal"/>
 
             </LinearLayout>
 
