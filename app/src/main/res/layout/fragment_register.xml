@@ -23,15 +23,16 @@
 
                 <androidx.appcompat.widget.Toolbar
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="119dp"
                     android:background="@color/color_default">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
                         android:layout_gravity="center_horizontal"
-                        android:text="@string/status_bar_register" />
+                        android:text="@string/status_bar_register"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
 
                 </androidx.appcompat.widget.Toolbar>
 
@@ -40,12 +41,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:padding="16dp"
                 android:orientation="vertical"
+                android:padding="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+                app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+                app:layout_constraintVertical_bias="1.0">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -54,15 +57,16 @@
                     android:textColor="@color/white" />
 
                 <EditText
+                    android:id="@+id/edtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:autofillHints=""
                     android:background="@drawable/bg_edit"
                     android:hint="@string/ph_email"
+                    android:inputType="textAutoComplete"
                     android:padding="14dp"
-                    android:textSize="14sp"
-                    android:autofillHints=""
-                    android:inputType="textAutoComplete" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -72,17 +76,19 @@
                     android:textColor="@color/white" />
 
                 <EditText
+                    android:id="@+id/edtPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:autofillHints=""
                     android:background="@drawable/bg_edit"
                     android:hint="@string/v_senha"
+                    android:inputType="textPassword"
                     android:padding="14dp"
-                    android:textSize="14sp"
-                    android:autofillHints=""
-                    android:inputType="textPassword" />
+                    android:textSize="14sp" />
 
                 <Button
+                    android:id="@+id/btnRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -91,15 +97,16 @@
                     android:textAllCaps="false"
                     android:textColor="@color/color_default"
                     app:backgroundTint="@null" />
+
                 <ProgressBar
                     android:id="@+id/progressBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    tools:visibility="visible"
-                    android:indeterminateTint="@color/white"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
-                    android:layout_gravity="center_horizontal"/>
+                    android:indeterminateTint="@color/white"
+                    android:visibility="invisible"
+                    tools:visibility="visible" />
 
             </LinearLayout>
 
