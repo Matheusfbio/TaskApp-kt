@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
     tools:context=".ui.auth.LoginFragment">
@@ -21,6 +22,7 @@
             android:textColor="#4E342E" />
 
         <EditText
+            android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -28,8 +30,9 @@
             android:hint="@string/ph_email"
             android:padding="14dp"
             android:textColorHint="#757575"
+            android:inputType="textEmailAddress"
             android:textSize="14sp"
-            tools:ignore="Autofill,TextFields,VisualLintTextFieldSize" />
+            tools:ignore="Autofill,VisualLintTextFieldSize" />
 
 
         <TextView
@@ -40,6 +43,7 @@
             android:textColor="#4E342E" />
 
         <EditText
+            android:id="@+id/edtPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -47,10 +51,12 @@
             android:hint="@string/ph_secret_senha"
             android:padding="14dp"
             android:textColorHint="#757575"
+            android:inputType="textPassword"
             android:textSize="14sp"
             tools:ignore="Autofill,TextFields,VisualLintTextFieldSize" />
 
         <Button
+            android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -67,9 +73,11 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/btn_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:layout_marginStart="16dp"
                 android:text="@string/bt_criar_conta"
                 android:textColor="#4E342E"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -77,6 +85,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/btn_recovery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -86,6 +95,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            tools:visibility="visible"
+            android:indeterminateTint="@color/white"
+            android:visibility="invisible" />
 
     </LinearLayout>
 
