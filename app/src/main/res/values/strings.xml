@@ -1,0 +1,31 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">TaskApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Bem vindo a home</string>
+    <string name="status_bar_register">Criar conta</string>
+    <string name="e_mail">E-mail</string>
+    <string name="ph_email">Email@email.com</string>
+    <string name="v_senha">Senha</string>
+    <string name="ph_secret_senha">*************</string>
+    <string name="login_button">Login</string>
+    <string name="register_button">Criar sua conta</string>
+    <string name="bt_criar_conta">Criar conta</string>
+    <string name="bt_recuperar_conta">Recuperar conta</string>
+    <string name="example_email">Email@email.com</string>
+    <string name="error_generic">Ocorreu um error, por favor tente novamente mais tarde</string>
+
+    <!--    Erros Firebase Authentication-->
+    <string name="account_not_registered_register_fragment">Nenhuma conta encontrada com este e-mail.</string>
+    <string name="invalid_email_register_fragment">Insira um e-mail válido.</string>
+    <string name="invalid_password_register_fragment">Senha inválida, tente novamente.</string>
+    <string name="email_in_use_register_fragment">Este e-mail já está em uso.</string>
+    <string name="strong_password_register_fragment">Insira uma senha mais forte.</string>
+
+    <!--    Form Task Fragment          -->
+    <string name="Text_description_form_task_fragment">Nova tarefa</string>
+    <string name="Text_task_form_task_fragment">Tarefa</string>
+    <string name="Text_status_form_task_fragment">Status</string>
+    <string name="Text_btn_save_form_task_fragment">Salvar</string>
+    <string name="dialog_message">mensagem</string>
+    <string name="dialog_title">Tem certeza ?</string>
+</resources>
