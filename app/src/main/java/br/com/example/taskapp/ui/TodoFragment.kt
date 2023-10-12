@@ -10,7 +10,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.example.taskapp.R
 import br.com.example.taskapp.databinding.FragmentTodoBinding
 import br.com.example.taskapp.helper.FirebaseHelper
 import br.com.example.taskapp.model.Task
@@ -46,7 +45,10 @@ class TodoFragment : Fragment() {
 
 
     private fun initClicks() {
-        binding.fabAdd.setOnClickListener { findNavController().navigate(R.id.action_homeFragment_to_formTaskFragment)}
+        binding.fabAdd.setOnClickListener {
+            val action = HomeFragmentDirections
+            .actionHomeFragmentToFormTaskFragment(null)
+            findNavController().navigate(action)}
     }
 
     private fun getTasks() {
@@ -94,12 +96,48 @@ class TodoFragment : Fragment() {
         binding.rvTask.adapter = taskAdapter
     }
 
-    private fun  optionSelect(task: Task, select: Int) {
+    private fun optionSelect(task: Task, select: Int) {
         when (select) {
             TaskAdapter.SELECT_REMOVE -> {
                 deleteTask(task)
             }
+            TaskAdapter.SELECT_EDIT -> {
+                val action = HomeFragmentDirections
+                    .actionHomeFragmentToFormTaskFragment(task)
+                findNavController().navigate(action)
+            }
+            TaskAdapter.SELECT_NEXT -> {
+                task.status = 1
+                updateTask(task)
+            }
         }
+    }
+
+    private fun updateTask(task: Task) {
+        FirebaseHelper
+            .getDatabase()
+            .child("task")
+            .child(FirebaseHelper.getIdUser() ?: "")
+            .child(task.id)
+            .setValue(task)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                        Toast.makeText(
+                            requireContext(),
+                            "tarefa atualizada",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                } else {
+                    Toast.makeText(requireContext(), "Erro ao salva a tarefa", Toast.LENGTH_SHORT).show()
+                }
+            }.addOnFailureListener {
+                binding.progressBar.isVisible = false
+                Toast.makeText(
+                    requireContext(),
+                    "Erro ao salvar a tarefa",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
     }
 
     @SuppressLint("NotifyDataSetChanged")

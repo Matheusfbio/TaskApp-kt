@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.example.taskapp.databinding.FragmentDoneBinding
 import br.com.example.taskapp.helper.FirebaseHelper
@@ -86,12 +87,48 @@ class DoneFragment : Fragment() {
         binding.rvTask.adapter = taskAdapter
     }
 
-    private fun  optionSelect(task: Task, select: Int) {
+    private fun optionSelect(task: Task, select: Int) {
         when (select) {
             TaskAdapter.SELECT_REMOVE -> {
                 deleteTask(task)
             }
+            TaskAdapter.SELECT_EDIT -> {
+                val action = HomeFragmentDirections
+                    .actionHomeFragmentToFormTaskFragment(task)
+                findNavController().navigate(action)
+            }
+            TaskAdapter.SELECT_BACK -> {
+                task.status = 1
+                updateTask(task)
+            }
         }
+    }
+
+    private fun updateTask(task: Task) {
+        FirebaseHelper
+            .getDatabase()
+            .child("task")
+            .child(FirebaseHelper.getIdUser() ?: "")
+            .child(task.id)
+            .setValue(task)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(
+                        requireContext(),
+                        "tarefa atualizada",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(requireContext(), "Erro ao salva a tarefa", Toast.LENGTH_SHORT).show()
+                }
+            }.addOnFailureListener {
+                binding.progressBar.isVisible = false
+                Toast.makeText(
+                    requireContext(),
+                    "Erro ao salvar a tarefa",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
     }
 
     @SuppressLint("NotifyDataSetChanged")
