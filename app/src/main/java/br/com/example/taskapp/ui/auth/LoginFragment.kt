@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.example.taskapp.R
 import br.com.example.taskapp.databinding.FragmentLoginBinding
-import br.com.example.taskapp.helper.FirebaseHelper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -73,14 +72,17 @@ class LoginFragment : Fragment() {
     private fun loginUser(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
+                val user = auth.currentUser
+                if (user != null) {
                     findNavController().navigate(R.id.action_global_homeFragment)
                 } else {
-                    Toast.makeText(
-                        requireContext(),
-                        FirebaseHelper.validError(task.exception?.message ?: ""),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        // O usuário não existe
+                        Toast.makeText(
+                            requireContext(),
+                            "Usuário não encontrado. Por favor, registre-se primeiro.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
                     binding.progressBar.isVisible = false
                 }
             }

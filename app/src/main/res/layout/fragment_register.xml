@@ -32,7 +32,7 @@
                         android:layout_gravity="center_horizontal"
                         android:text="@string/status_bar_register"
                         android:textColor="@color/white"
-                        android:textSize="20sp" />
+                        android:textSize="30sp" />
 
                 </androidx.appcompat.widget.Toolbar>
 

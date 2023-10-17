@@ -4,7 +4,7 @@
     <string name="hello_blank_fragment">Bem vindo a home</string>
     <string name="status_bar_register">Criar conta</string>
     <string name="e_mail">E-mail</string>
-    <string name="ph_email">Email@email.com</string>
+    <string name="ph_email">Email@gmail.com</string>
     <string name="v_senha">Senha</string>
     <string name="ph_secret_senha">*************</string>
     <string name="login_button">Login</string>
@@ -23,6 +23,7 @@
 
     <!--    Form Task Fragment          -->
     <string name="Text_description_form_task_fragment">Nova tarefa</string>
+    <string name="Login_fragment_Text">Login</string>
     <string name="Text_task_form_task_fragment">Tarefa</string>
     <string name="Text_status_form_task_fragment">Status</string>
     <string name="Text_btn_save_form_task_fragment">Salvar</string>

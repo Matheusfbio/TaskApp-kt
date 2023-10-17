@@ -29,6 +29,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:layout_gravity="center_horizontal"
+                    android:textSize="30sp"
                     android:text="Recuperar conta" />
 
             </androidx.appcompat.widget.Toolbar>

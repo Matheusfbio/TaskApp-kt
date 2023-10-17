@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Login_fragment_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -11,9 +12,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="center"
-        android:padding="16dp">
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/TextLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:paddingBottom="90dp"
+            android:text="@string/Login_fragment_Text"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="30dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,9 +40,9 @@
             android:layout_margin="8dp"
             android:background="@drawable/bg_edit"
             android:hint="@string/ph_email"
+            android:inputType="textEmailAddress"
             android:padding="14dp"
             android:textColorHint="@color/black"
-            android:inputType="textEmailAddress"
             android:textSize="14sp"
             tools:ignore="Autofill,VisualLintTextFieldSize" />
 
@@ -64,7 +76,7 @@
             android:text="@string/login_button"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            app:backgroundTint="@null"
+            app:backgroundTint="@color/white"
             tools:ignore="VisualLintButtonSize" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -78,6 +90,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_marginStart="16dp"
+                android:background="@color/white"
+                android:padding="10dp"
                 android:text="@string/bt_criar_conta"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -89,6 +103,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:background="@color/white"
+                android:padding="10dp"
                 android:text="@string/bt_recuperar_conta"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -101,11 +117,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            tools:visibility="visible"
             android:indeterminateTint="@color/white"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            tools:visibility="visible" />
 
     </LinearLayout>
-
 
 </ScrollView>
