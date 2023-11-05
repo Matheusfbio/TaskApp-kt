@@ -21,7 +21,7 @@
     <string name="email_in_use_register_fragment">Este e-mail já está em uso.</string>
     <string name="strong_password_register_fragment">Insira uma senha mais forte.</string>
 
-    <!--    Form Task Fragment          -->
+    <!--    Form Task Fragment-->
     <string name="Text_description_form_task_fragment">Nova tarefa</string>
     <string name="Login_fragment_Text">Login</string>
     <string name="Text_task_form_task_fragment">Tarefa</string>
@@ -29,4 +29,15 @@
     <string name="Text_btn_save_form_task_fragment">Salvar</string>
     <string name="dialog_message">mensagem</string>
     <string name="dialog_title">Tem certeza ?</string>
+
+    <!--    todo Fragment-->
+    <string name="text_task_list_empty_todo_fragment">Nenhuma tarefa cadastrada</string>
+
+    <!--    doing Fragment-->
+    <string name="text_task_list_empty_doing_fragment">Nenhuma tarefa cadastrada</string>
+
+    <!--    done Fragment-->
+    <string name="text_task_list_empty_done_fragment">Nenhuma tarefa cadastrada</string>
+
+
 </resources>

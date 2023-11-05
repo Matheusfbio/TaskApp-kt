@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import br.com.example.taskapp.databinding.FragmentRecoveryAccountBinding
-import br.com.example.taskapp.helper.FirebaseHelper
+import br.com.example.taskapp.helper.BaseFragment
+import br.com.example.taskapp.helper.initToolbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class RecoveryAccountFragment : Fragment() {
+class RecoveryAccountFragment : BaseFragment() {
 
     private var _binding: FragmentRecoveryAccountBinding? = null
     private val binding get() = _binding!!
@@ -29,6 +29,7 @@ class RecoveryAccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initToolbar(binding.toolbar)
 
         auth = Firebase.auth
 
@@ -46,6 +47,8 @@ class RecoveryAccountFragment : Fragment() {
 
         if (email.isNotEmpty()) {
 
+            hideKeyboard()
+
             binding.progressBar.isVisible = true
 
             recoveryAccountUser(email)
@@ -60,16 +63,18 @@ class RecoveryAccountFragment : Fragment() {
             if (task.isSuccessful) {
                 Toast.makeText(
                     requireContext(),
-                    "Pronto acabamos de enviar un link para seu e-mail",
+                    "Pronto acabamos de enviar um link para o seu e-mail",
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            Toast.makeText(
-                requireContext(),
-                FirebaseHelper.validError(task.exception?.message ?: ""),
-                Toast.LENGTH_SHORT
-            ).show()
-            binding.progressBar.isVisible = false
+//                Toast.makeText(
+//                    requireContext(),
+//                    "Email não encontrado. Por favor, verifique se o email esta cadastrado.",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+
+
+                binding.progressBar.isVisible = false
         }
     }
 

@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.example.taskapp.R
 import br.com.example.taskapp.databinding.FragmentDoingBinding
 import br.com.example.taskapp.helper.FirebaseHelper
 import br.com.example.taskapp.model.Task
@@ -63,9 +64,9 @@ class DoingFragment : Fragment() {
 
                         taskList.reverse()
                         initAdapter()
-                    } else {
-                        binding.textInfo.text = "Nenhuma tarefa cadastrada"
                     }
+
+                    tasksEmpty()
 
                     binding.progressBar.isVisible = false
                 }
@@ -75,6 +76,15 @@ class DoingFragment : Fragment() {
                 }
 
             })
+    }
+
+    private fun tasksEmpty(){
+        binding.textInfo.text = if(taskList.isEmpty())
+        {
+            getText(R.string.text_task_list_empty_todo_fragment)
+        } else {
+            ""
+        }
     }
 
     private fun initAdapter() {

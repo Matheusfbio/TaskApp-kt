@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.example.taskapp.R
 import br.com.example.taskapp.databinding.FragmentTodoBinding
+import br.com.example.taskapp.helper.BaseFragment
 import br.com.example.taskapp.helper.FirebaseHelper
 import br.com.example.taskapp.model.Task
 import br.com.example.taskapp.ui.adapter.TaskAdapter
@@ -18,7 +19,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
-class TodoFragment : Fragment() {
+class TodoFragment : BaseFragment() {
 
     private var _binding: FragmentTodoBinding? = null
     private val binding get() = _binding!!
@@ -63,19 +64,18 @@ class TodoFragment : Fragment() {
                         taskList.clear()
                         for (snap in snapshot.children) {
                             val task = snap.getValue(Task::class.java) as Task
-
                             if (task.status == 0) {
                                 taskList.add(task)
                             }
                         }
 
-                        binding.textInfo.text = ""
+
 
                         taskList.reverse()
                         initAdapter()
-                    } else {
-                        binding.textInfo.text = "Nenhuma tarefa cadastrada"
                     }
+
+                    tasksEmpty()
 
                     binding.progressBar.isVisible = false
                 }
@@ -85,6 +85,15 @@ class TodoFragment : Fragment() {
                 }
 
             })
+    }
+
+    private fun tasksEmpty(){
+        binding.textInfo.text = if(taskList.isEmpty())
+        {
+            getText(R.string.text_task_list_empty_todo_fragment)
+        } else {
+            ""
+        }
     }
 
     private fun initAdapter() {

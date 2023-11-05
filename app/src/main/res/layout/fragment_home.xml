@@ -23,15 +23,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@color/color_default"
+                app:tabSelectedTextColor="@color/black"
                 android:elevation="0dp"
                 app:layout_constraintBaseline_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/ibLogout"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tabIndicatorColor="@color/white"
+                app:tabIndicatorColor="@color/black"
                 app:tabTextAppearance="@style/CustomTabLayout"
-                app:tabTextColor="@color/white" />
+                app:tabTextColor="@color/black" />
 
             <ImageButton
                 android:id="@+id/ibLogout"
