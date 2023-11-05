@@ -1,16 +1,17 @@
 package br.com.example.taskapp.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.example.taskapp.R
 import br.com.example.taskapp.databinding.FragmentTodoBinding
+import br.com.example.taskapp.helper.BaseFragment
 import br.com.example.taskapp.helper.FirebaseHelper
 import br.com.example.taskapp.model.Task
 import br.com.example.taskapp.ui.adapter.TaskAdapter
@@ -18,7 +19,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
-class TodoFragment : Fragment() {
+class TodoFragment : BaseFragment() {
 
     private var _binding: FragmentTodoBinding? = null
     private val binding get() = _binding!!
@@ -45,7 +46,10 @@ class TodoFragment : Fragment() {
 
 
     private fun initClicks() {
-        binding.fabAdd.setOnClickListener { findNavController().navigate(R.id.action_homeFragment_to_formTaskFragment)}
+        binding.fabAdd.setOnClickListener {
+            val action = HomeFragmentDirections
+            .actionHomeFragmentToFormTaskFragment(null)
+            findNavController().navigate(action)}
     }
 
     private fun getTasks() {
@@ -60,19 +64,18 @@ class TodoFragment : Fragment() {
                         taskList.clear()
                         for (snap in snapshot.children) {
                             val task = snap.getValue(Task::class.java) as Task
-
                             if (task.status == 0) {
                                 taskList.add(task)
                             }
                         }
 
-                        binding.textInfo.text = ""
+
 
                         taskList.reverse()
                         initAdapter()
-                    } else {
-                        binding.textInfo.text = "Nenhuma tarefa cadastrada"
                     }
+
+                    tasksEmpty()
 
                     binding.progressBar.isVisible = false
                 }
@@ -84,13 +87,79 @@ class TodoFragment : Fragment() {
             })
     }
 
+    private fun tasksEmpty(){
+        binding.textInfo.text = if(taskList.isEmpty())
+        {
+            getText(R.string.text_task_list_empty_todo_fragment)
+        } else {
+            ""
+        }
+    }
+
     private fun initAdapter() {
         binding.rvTask.layoutManager = LinearLayoutManager(requireContext())
         binding.rvTask.setHasFixedSize(true)
-        taskAdapter = TaskAdapter(requireContext(), taskList) { task, int ->
-
+        taskAdapter = TaskAdapter(requireContext(), taskList) { task, select ->
+            optionSelect(task, select)
         }
         binding.rvTask.adapter = taskAdapter
+    }
+
+    private fun optionSelect(task: Task, select: Int) {
+        when (select) {
+            TaskAdapter.SELECT_REMOVE -> {
+                deleteTask(task)
+            }
+            TaskAdapter.SELECT_EDIT -> {
+                val action = HomeFragmentDirections
+                    .actionHomeFragmentToFormTaskFragment(task)
+                findNavController().navigate(action)
+            }
+            TaskAdapter.SELECT_NEXT -> {
+                task.status = 1
+                updateTask(task)
+            }
+        }
+    }
+
+    private fun updateTask(task: Task) {
+        FirebaseHelper
+            .getDatabase()
+            .child("task")
+            .child(FirebaseHelper.getIdUser() ?: "")
+            .child(task.id)
+            .setValue(task)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                        Toast.makeText(
+                            requireContext(),
+                            "tarefa atualizada",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                } else {
+                    Toast.makeText(requireContext(), "Erro ao salva a tarefa", Toast.LENGTH_SHORT).show()
+                }
+            }.addOnFailureListener {
+                binding.progressBar.isVisible = false
+                Toast.makeText(
+                    requireContext(),
+                    "Erro ao salvar a tarefa",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun deleteTask(task: Task) {
+        FirebaseHelper
+            .getDatabase()
+            .child("task")
+            .child(FirebaseHelper.getIdUser() ?: "")
+            .child(task.id)
+            .removeValue()
+
+        taskList.remove(task)
+        taskAdapter.notifyDataSetChanged()
     }
 
     override fun onDestroyView() {

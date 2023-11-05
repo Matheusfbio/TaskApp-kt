@@ -6,14 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import br.com.example.taskapp.R
 import br.com.example.taskapp.databinding.FragmentFormTaskBinding
+import br.com.example.taskapp.helper.BaseFragment
 import br.com.example.taskapp.helper.FirebaseHelper
+import br.com.example.taskapp.helper.initToolbar
 import br.com.example.taskapp.model.Task
 
-class FormTaskFragment : Fragment() {
+class FormTaskFragment : BaseFragment() {
+
+    private val args: FormTaskFragmentArgs by navArgs()
 
     private var _binding: FragmentFormTaskBinding? = null
     private val binding get() = _binding!!
@@ -32,7 +36,44 @@ class FormTaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initToolbar(binding.toolbar)
+
         initListeners()
+        getArgs()
+    }
+
+    private fun getArgs() {
+        args.task.let {
+            if (it != null) {
+                task = it
+                configTask()
+            }
+        }
+    }
+
+    private fun configTask() {
+        newTask = false
+        statusTask = task.status
+        binding.textToolbar.text = "Editando tarefa..."
+
+        binding.edtDescription.setText(task.description)
+        setStatus()
+    }
+
+    private fun setStatus() {
+        binding.radioGroup.check(
+            when (task.status) {
+                0 -> {
+                    R.id.rbDo
+                }
+                1 -> {
+                    R.id.rbDoing
+                }
+                else -> {
+                    R.id.rbDone
+                }
+            }
+        )
     }
 
     private fun initListeners() {
@@ -52,6 +93,8 @@ class FormTaskFragment : Fragment() {
 
         if (description.isNotEmpty()){
 
+            hideKeyboard()
+
             binding.progressBar.isVisible = true
 
             if (newTask) task = Task()
@@ -67,6 +110,7 @@ class FormTaskFragment : Fragment() {
             ).show()
         }
     }
+
     private fun saveTask() {
         FirebaseHelper
             .getDatabase()

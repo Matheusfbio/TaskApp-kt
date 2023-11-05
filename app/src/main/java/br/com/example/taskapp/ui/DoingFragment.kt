@@ -1,5 +1,6 @@
 package br.com.example.taskapp.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.example.taskapp.R
 import br.com.example.taskapp.databinding.FragmentDoingBinding
 import br.com.example.taskapp.helper.FirebaseHelper
 import br.com.example.taskapp.model.Task
@@ -36,7 +39,6 @@ class DoingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         getTasks()
     }
 
@@ -62,9 +64,9 @@ class DoingFragment : Fragment() {
 
                         taskList.reverse()
                         initAdapter()
-                    } else {
-                        binding.textInfo.text = "Nenhuma tarefa cadastrada"
                     }
+
+                    tasksEmpty()
 
                     binding.progressBar.isVisible = false
                 }
@@ -76,15 +78,85 @@ class DoingFragment : Fragment() {
             })
     }
 
+    private fun tasksEmpty(){
+        binding.textInfo.text = if(taskList.isEmpty())
+        {
+            getText(R.string.text_task_list_empty_todo_fragment)
+        } else {
+            ""
+        }
+    }
+
     private fun initAdapter() {
         binding.rvTask.layoutManager = LinearLayoutManager(requireContext())
         binding.rvTask.setHasFixedSize(true)
-        taskAdapter = TaskAdapter(requireContext(), taskList) { task, int ->
-
+        taskAdapter = TaskAdapter(requireContext(), taskList) { task, select ->
+            optionSelect(task, select)
         }
         binding.rvTask.adapter = taskAdapter
     }
 
+    private fun optionSelect(task: Task, select: Int) {
+        when (select) {
+            TaskAdapter.SELECT_REMOVE -> {
+                deleteTask(task)
+            }
+            TaskAdapter.SELECT_EDIT -> {
+                val action = HomeFragmentDirections
+                    .actionHomeFragmentToFormTaskFragment(task)
+                findNavController().navigate(action)
+            }
+            TaskAdapter.SELECT_BACK -> {
+                task.status = 0
+                updateTask(task)
+            }
+            TaskAdapter.SELECT_NEXT -> {
+                task.status = 2
+                updateTask(task)
+            }
+        }
+    }
+
+    private fun updateTask(task: Task) {
+        FirebaseHelper
+            .getDatabase()
+            .child("task")
+            .child(FirebaseHelper.getIdUser() ?: "")
+            .child(task.id)
+            .setValue(task)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(
+                        requireContext(),
+                        "tarefa atualizada",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(requireContext(), "Erro ao salva a tarefa", Toast.LENGTH_SHORT).show()
+                }
+            }.addOnFailureListener {
+                binding.progressBar.isVisible = false
+                Toast.makeText(
+                    requireContext(),
+                    "Erro ao salvar a tarefa",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun deleteTask(task: Task) {
+        FirebaseHelper
+            .getDatabase()
+            .child("task")
+            .child(FirebaseHelper.getIdUser() ?: "")
+            .child(task.id)
+            .removeValue()
+
+        taskList.remove(task)
+        taskAdapter.notifyDataSetChanged()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

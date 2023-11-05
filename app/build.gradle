@@ -2,12 +2,16 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+    id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-parcelize'
 }
 
 android {
     namespace 'br.com.example.taskapp'
     compileSdk 33
+    useLibrary 'android.test.runner'
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
 
     defaultConfig {
         applicationId "br.com.example.taskapp"
@@ -40,13 +44,22 @@ android {
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.10.1'
+    androidTestImplementation 'androidx.test:core:1.5.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.databinding:databinding-runtime:8.0.2'
-    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.ext:truth:1.5.0'
+    androidTestImplementation 'com.google.truth:truth:0.42'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-web:3.1.0'
+    androidTestImplementation 'androidx.test.espresso.idling:idling-concurrent:3.5.1'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test:rules:1.1.0'
 
     //navigation
     def nav_version = "2.5.3"
@@ -58,4 +71,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation("com.google.firebase:firebase-database-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
+
+    // AndroidX Test - JVM testing
+    testImplementation "androidx.test.ext:junit-ktx:1.1.5"
+    testImplementation "androidx.test:core-ktx:1.5.0"
+    testImplementation 'org.robolectric:robolectric:4.9'
 }
