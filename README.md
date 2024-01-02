@@ -19,7 +19,9 @@ https://github.com/Matheusfbio/TaskApp-kt/assets/83082876/d96cc533-b4a9-4503-a61
 
 - **Kotlin:** Main programming language.
 - **Android Studio:** Development environment used to create the application.
-- **SQLite:** Local database for job storage.
+- **Firebase:** Cloud database and authentication for data storage.
+- **Xml:** Design of user's interface 
+- **DataBinding:** facilitate the connection between user interface (UI) components and business logic in an Android application
 
 ## Prerequisites
 
